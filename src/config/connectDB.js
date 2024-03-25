@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-
+//'database', 'username', 'password'
 const sequelize = new Sequelize('nguyenhaiit', 'root', null, {
     host: 'localhost',
     dialect: 'mysql',
