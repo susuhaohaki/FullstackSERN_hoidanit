@@ -1,5 +1,5 @@
 import db from '../models/index';
-const { createNewUser, getAllUser } = require("../services/CRUDService");
+const { createNewUser, getAllUser, getUserInfoById, updateUserData } = require("../services/CRUDService");
 let getHomePage = async (req, res) => {
     try {
         let data = await db.User.findAll();
@@ -18,8 +18,10 @@ let getCRUD = async (req, res) => {
 
 let postCRUD = async (req, res) => {
     let message = await createNewUser(req.body);
-    console.log(message)
-    return res.send("post CRUD form sever")
+    let data = await getAllUser();
+    res.render("display-CRUD.ejs", {
+        dataTable: data,
+    })
 };
 
 let displayCRUD = async (req, res) => {
@@ -31,8 +33,26 @@ let displayCRUD = async (req, res) => {
     })
 }
 
+let getEditCRUD = async (req, res) => {
+    let userId = req.query.id;
+    if (userId) {
+        let userData = await getUserInfoById(userId)
+        return res.render("editCRUD.ejs", { dataTable: userData })
+    }
+    else {
+        return res.send("User not Found")
+    }
+}
 
+let putCRUD = async (req, res) => {
+    let data = req.body;
+    let alluser = await updateUserData(data);
+    console.log(data);
+    return res.render('display-CRUD.ejs', {
+        dataTable: alluser
+    })
+}
 
 module.exports = {
-    getHomePage, getCRUD, postCRUD, displayCRUD
+    getHomePage, getCRUD, postCRUD, displayCRUD, getEditCRUD, putCRUD
 }

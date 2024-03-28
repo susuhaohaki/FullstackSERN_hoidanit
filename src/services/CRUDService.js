@@ -48,4 +48,43 @@ let getAllUser = () => {
         }
     })
 }
-module.exports = { createNewUser, getAllUser }
+
+let getUserInfoById = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: userId }, raw: true
+            })
+            if (user) {
+                resolve(user)
+            } else {
+                resolve({})
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+
+let updateUserData = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let newUser = await db.User.update({
+                firstName: data.FirstName,
+                lastName: data.LastName,
+                address: data.Address,
+                phonenumber: data.Phonenumber
+            }, {
+                where: { id: data.id }
+            });
+            let allUser = db.User.findAll({
+                raw: true
+            });
+            resolve(allUser)
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+module.exports = { createNewUser, getAllUser, getUserInfoById, updateUserData }

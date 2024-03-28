@@ -20,7 +20,7 @@
 
 <body>
     <div class="container">
-        <table class="table table-striped">
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th scope="col">Id</th>
@@ -29,6 +29,7 @@
                     <th scope="col">LastName</th>
                     <th scope="col">address</th>
                     <th scope="col">phoneNumber</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,10 +53,15 @@
                         <td>
                             <%= dataTable[i].phonenumber %>
                         </td>
+                        <td>
+                            <a href="/edit-crud?id=<%=dataTable[i].id%>" type="button" class="btn btn-dark">edit</a>
+                            <a type="button" class="btn btn-dark">deleted</a>
+                        </td>
                     </tr>
                     <% } %>
             </tbody>
         </table>
+        <a href="/crud" type="button" class="btn btn-primary">CREATE New User</a>
     </div>
 </body>
 
