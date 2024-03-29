@@ -1,5 +1,5 @@
 import db from '../models/index';
-const { createNewUser, getAllUser, getUserInfoById, updateUserData } = require("../services/CRUDService");
+const { createNewUser, getAllUser, getUserInfoById, updateUserData, deleteUserById } = require("../services/CRUDService");
 let getHomePage = async (req, res) => {
     try {
         let data = await db.User.findAll();
@@ -26,8 +26,6 @@ let postCRUD = async (req, res) => {
 
 let displayCRUD = async (req, res) => {
     let data = await getAllUser();
-    console.log("------------");
-    console.log(data)
     res.render("display-CRUD.ejs", {
         dataTable: data,
     })
@@ -53,6 +51,16 @@ let putCRUD = async (req, res) => {
     })
 }
 
+let deleteCRUD = async (req, res) => {
+    let userId = req.query.id;
+    if (userId) {
+        await deleteUserById(userId);
+        return res.send("delete user succeed")
+    } else {
+        return res.send("user not found")
+    }
+}
+
 module.exports = {
-    getHomePage, getCRUD, postCRUD, displayCRUD, getEditCRUD, putCRUD
+    getHomePage, getCRUD, postCRUD, displayCRUD, getEditCRUD, putCRUD, deleteCRUD,
 }

@@ -1,5 +1,7 @@
 import Express from "express";
-const { getHomePage, getCRUD, postCRUD, displayCRUD, getEditCRUD, putCRUD } = require("../controllers/homeController");
+const { getHomePage, getCRUD, postCRUD,
+    displayCRUD, getEditCRUD, putCRUD,
+    deleteCRUD } = require("../controllers/homeController");
 let router = Express.Router();
 
 let initWebRoutes = (app) => {
@@ -12,7 +14,8 @@ let initWebRoutes = (app) => {
     //edit user
     router.get("/edit-crud", getEditCRUD)
     router.post("/put-crud", putCRUD)
-
+    //delete user
+    router.get("/delete-crud", deleteCRUD)
 
     return app.use("/", router);
 }
