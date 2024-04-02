@@ -2,6 +2,7 @@ import Express from "express";
 const { getHomePage, getCRUD, postCRUD,
     displayCRUD, getEditCRUD, putCRUD,
     deleteCRUD } = require("../controllers/homeController");
+import userController from "../controllers/userController";
 let router = Express.Router();
 
 let initWebRoutes = (app) => {
@@ -17,6 +18,10 @@ let initWebRoutes = (app) => {
     //delete user
     router.get("/delete-crud", deleteCRUD)
 
+
+
+    // api
+    router.post('/api/login', userController.handleLogin)
     return app.use("/", router);
 }
 
